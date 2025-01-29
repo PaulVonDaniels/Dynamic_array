@@ -1,25 +1,18 @@
 #include <iostream>
 #include <cstdio>
 #include <locale.h>
-
-
 #include <exception>
 #include <cstring>
 #include <string>
-
-
 #include <cstdint>
 #include <cstdlib>
 #include <algorithm>
-
-
 using std::fixed;
 using std::ios;
 using std::cout;
 using std::cin;
 using std::endl;
 using std::string;
-
 
 class VectorIndexError : public std::exception
 {
@@ -111,17 +104,52 @@ public:
 
     Vector<T>& operator+(Vector<T>& other);
 
-    class Iterator {
-        T* ptr;
-    public:
-        Iterator(T* p) : ptr(p) {}
-        T& operator*() { return *ptr; }
-        Iterator& operator++() { ++ptr; return *this; }
-        bool operator!=(const Iterator& other) const { return ptr != other.ptr; }
-    };
+    T* data() { return arr; }
+    const T* data() const { return arr; }
 
-    Iterator begin() { return Iterator(arr); }
-    Iterator end() { return Iterator(arr + length); }
+    T& at(int64_t index) {
+        if (index >= length || index < 0) 
+        {
+            throw VectorIndexError("Invalid element index.");
+        }
+        return arr[index];
+    }
+
+    const T& at(int64_t index) const {
+        if (index >= length || index < 0) 
+        {
+            throw VectorIndexError("Invalid element index.");
+        }
+        return arr[index];
+    }
+
+    void fill(T value) {
+        for (int64_t i = 0; i < length; ++i) 
+        {
+            arr[i] = value;
+        }
+    }
+
+    bool contains(T value) const {
+        for (int64_t i = 0; i < length; ++i) 
+        {
+            if (arr[i] == value) 
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void replace(T old_value, T new_value) {
+        for (int64_t i = 0; i < length; ++i) 
+        {
+            if (arr[i] == old_value) 
+            {
+                arr[i] = new_value;
+            }
+        }
+    }
 };
 
 template <class T>
@@ -444,7 +472,7 @@ Vector<T>& Vector<T>::operator+(Vector<T>& other)
     return *res;
 }
 
-int main() 
+signed int main() 
 {
     Vector<int> vec;
     vec.push_back(10);
