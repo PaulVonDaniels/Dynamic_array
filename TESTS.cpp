@@ -6,84 +6,78 @@ the operability of all the functions of my dynamic array.
 
 signed int main(void) 
 {
-    Vector<short> vec;
+    Vector<short> vector;
 
-    vec.push_back(10);
-    vec.push_back(20);
-    vec.push_front(5);
-    vec.push_front(1);
-    cout << "Test 1: ";
-    vec.print();
+    vector.push_back(10); vector.push_back(20); vector.push_front(5); vector.push_front(1);
+    std::cout << "Test 1: ";
+    vector.print();
 
-    vec.pop_back();
-    vec.pop_front();
+    vector.pop_back();
+    vector.pop_front();
     cout << "Test 2: ";
-    vec.print();
+    vector.print();
 
-    vec[0] = 15;
+    vector[0] = 15;
     cout << "Test 3: ";
-    vec.print();
+    vector.print();
 
-    vec.insert(1, 12);
+    vector.insert(1, 12);
     cout << "Test 4: ";
-    vec.print();
+    vector.print();
 
-    vec.remove(1);
+    vector.remove(1);
     cout << "Test 5: ";
-    vec.print();
+    vector.print();
 
-    vec.clear();
+    vector.clear();
     cout << "Test 6: ";
-    vec.print();
+    vector.print();
 
-    vec.push_back(3);
-    vec.push_back(1);
-    vec.push_back(4);
-    vec.fill(100);
+    vector.push_back(3);
+    vector.push_back(1);
+    vector.push_back(4);
+    vector.fill(100);
     cout << "Test 7: ";
-    vec.print();
+    vector.print();
 
-    cout << "Test 8: " << (vec.contains(100) ? "true" : "false") << endl;
-    cout << "Test 8: " << (vec.contains(200) ? "true" : "false") << endl;
+    cout << "Test 8: " << vector.contains(100)?"is true":"is false"<<endl;
+    cout << "Test 8: " << vector.contains(200)?"is true":"is false"<<endl;
 
-    vec.replace(100, 50);
+    vector.replace(100, 50);
     cout << "Test 9: ";
-    vec.print();
+    vector.print();
 
-    cout << "Test 10: " << vec.at(1) << endl;
+    std::cout << "Test 10: " << vector.at(1) << endl;
     __try 
     {
-        cout << "Test 10: " << vec.at(10) << endl;
+        cout << "Test 10: " << vector.at(10) << endl;
     } 
     __catch (const VectorIndexError& __e) {
         cout << "Test 10: " << __e.what() << endl;
     }
 
-    short* data_ptr = vec.data();
+    short* data_ptr = vector.data();
     cout << "Test 11: " << data_ptr[0] << " " << data_ptr[1] << " " << data_ptr[2] << endl;
 
-    vec.push_back(30);
-    vec.push_back(20);
-    vec.push_back(10);
-    vec.sort();
+    vector.push_back(30); vector.push_back(20); vector.push_back(10);
+    vector.sort();
     cout << "Test 12: ";
-    vec.print();
+    vector.print();
 
-    vec.reverse();
+    vector.reverse();
     cout << "Test 13: ";
-    vec.print();
+    vector.print();
 
-    vec.push_back(50);
-    vec.push_back(50);
-    vec.unique();
+    vector.push_back(50); vector.push_back(50);
+    vector.unique();
     cout << "Test 14: ";
-    vec.print();
+    vector.print();
 
-    vec.shrink_to_fit();
-    cout << "Test 15: " << vec.capacity() << endl;
+    vector.shrink_to_fit();
+    cout << "Test 15: " << vector.capacity() << endl;
 
-    vec.reserve(10);
-    cout << "Test 16: " << vec.capacity() << endl;
+    vector.reserve(10);
+    cout << "Test 16: " << vector.capacity() << endl;
 
     Vector<int> vec2;
     vec2.assign(3, 100);
@@ -101,8 +95,7 @@ signed int main(void)
     vec2.print();
 
     Vector<int> vec3;
-    vec3.push_back(7);
-    vec3.push_back(8);
+    vec3.push_back(7); vec3.push_back(8);
     vec2 += vec3;
     cout << "Test 20: ";
     vec2.print();
