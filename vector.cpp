@@ -1,3 +1,9 @@
+/*
+
+Additional texts are provided in the "TESTS" file
+
+*/
+
 #include <iostream>
 #include <cstdio>
 #include <locale.h>
