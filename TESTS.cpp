@@ -4,105 +4,206 @@ the operability of all the functions of my dynamic array.
 */
 
 
-signed int main(void) 
-{
-    Vector<short> vector;
+#include <gtest/gtest.h>
+#include "Vector.h"
 
-    vector.push_back(10); vector.push_back(20); vector.push_front(5); vector.push_front(1);
-    std::cout << "Test 1: ";
-    vector.print();
-
-    vector.pop_back();
-    vector.pop_front();
-    cout << "Test 2: ";
-    vector.print();
-
-    vector[0] = 15;
-    cout << "Test 3: ";
-    vector.print();
-
-    vector.insert(1, 12);
-    cout << "Test 4: ";
-    vector.print();
-
-    vector.remove(1);
-    cout << "Test 5: ";
-    vector.print();
-
-    vector.clear();
-    cout << "Test 6: ";
-    vector.print();
-
-    vector.push_back(3);
-    vector.push_back(1);
-    vector.push_back(4);
-    vector.fill(100);
-    cout << "Test 7: ";
-    vector.print();
-
-    cout << "Test 8: " << vector.contains(100)?"is true":"is false"<<endl;
-    cout << "Test 8: " << vector.contains(200)?"is true":"is false"<<endl;
-
-    vector.replace(100, 50);
-    cout << "Test 9: ";
-    vector.print();
-
-    std::cout << "Test 10: " << vector.at(1) << endl;
-    __try 
-    {
-        cout << "Test 10: " << vector.at(10) << endl;
-    } 
-    __catch (const VectorIndexError& __e) {
-        cout << "Test 10: " << __e.what() << endl;
-    }
-
-    short* data_ptr = vector.data();
-    cout << "Test 11: " << data_ptr[0] << " " << data_ptr[1] << " " << data_ptr[2] << endl;
-
-    vector.push_back(30); vector.push_back(20); vector.push_back(10);
-    vector.sort();
-    cout << "Test 12: ";
-    vector.print();
-
-    vector.reverse();
-    cout << "Test 13: ";
-    vector.print();
-
-    vector.push_back(50); vector.push_back(50);
-    vector.unique();
-    cout << "Test 14: ";
-    vector.print();
-
-    vector.shrink_to_fit();
-    cout << "Test 15: " << vector.capacity() << endl;
-
-    vector.reserve(10);
-    cout << "Test 16: " << vector.capacity() << endl;
-
-    Vector<int> vec2;
-    vec2.assign(3, 100);
-    cout << "Test 17: ";
-    vec2.print();
-
-    vec.swap(vec2);
-    cout << "Test 18 (vec): ";
-    vec.print();
-    cout << "Test 18 (vec2): ";
-    vec2.print();
-
-    vec2.erase(1, 3);
-    cout << "Test 19: ";
-    vec2.print();
-
-    Vector<int> vec3;
-    vec3.push_back(7); vec3.push_back(8);
-    vec2 += vec3;
-    cout << "Test 20: ";
-    vec2.print();
-
-    Vector<int> vec4 = vec2 + vec3;
-    cout << "Test 21: ";
-    vec4.print();
-
-    return 0;
+TEST(VectorTest, PushBack) {
+    Vector<int> vec;
+    vec.push_back(10);
+    vec.push_back(20);
+    vec.push_back(30);
+    EXPECT_EQ(vec[0], 10);
+    EXPECT_EQ(vec[1], 20);
+    EXPECT_EQ(vec[2], 30);
 }
+
+TEST(VectorTest, PushFront) {
+    Vector<int> vec;
+    vec.push_front(10);
+    vec.push_front(20);
+    vec.push_front(30);
+    EXPECT_EQ(vec[0], 30);
+    EXPECT_EQ(vec[1], 20);
+    EXPECT_EQ(vec[2], 10);
+}
+
+TEST(VectorTest, PopBack) {
+    Vector<int> vec;
+    vec.push_back(10);
+    vec.push_back(20);
+    vec.push_back(30);
+    vec.pop_back();
+    EXPECT_EQ(vec[0], 10);
+    EXPECT_EQ(vec[1], 20);
+}
+
+TEST(VectorTest, PopFront) {
+    Vector<int> vec;
+    vec.push_back(10);
+    vec.push_back(20);
+    vec.push_back(30);
+    vec.pop_front();
+    EXPECT_EQ(vec[0], 20);
+    EXPECT_EQ(vec[1], 30);
+}
+
+TEST(VectorTest, Insert) {
+    Vector<int> vec;
+    vec.push_back(10);
+    vec.push_back(20);
+    vec.push_back(30);
+    vec.insert(1, 15);
+    EXPECT_EQ(vec[0], 10);
+    EXPECT_EQ(vec[1], 15);
+    EXPECT_EQ(vec[2], 20);
+    EXPECT_EQ(vec[3], 30);
+}
+
+TEST(VectorTest, Remove) {
+    Vector<int> vec;
+    vec.push_back(10);
+    vec.push_back(20);
+    vec.push_back(30);
+    vec.remove(1);
+    EXPECT_EQ(vec[0], 10);
+    EXPECT_EQ(vec[1], 30);
+}
+
+TEST(VectorTest, Clear) {
+    Vector<int> vec;
+    vec.push_back(10);
+    vec.push_back(20);
+    vec.push_back(30);
+    vec.clear();
+    EXPECT_TRUE(vec.empty());
+}
+
+TEST(VectorTest, Sort) {
+    Vector<int> vec;
+    vec.push_back(30);
+    vec.push_back(10);
+    vec.push_back(20);
+    vec.sort();
+    EXPECT_EQ(vec[0], 10);
+    EXPECT_EQ(vec[1], 20);
+    EXPECT_EQ(vec[2], 30);
+}
+
+TEST(VectorTest, Reverse) {
+    Vector<int> vec;
+    vec.push_back(10);
+    vec.push_back(20);
+    vec.push_back(30);
+    vec.reverse();
+    EXPECT_EQ(vec[0], 30);
+    EXPECT_EQ(vec[1], 20);
+    EXPECT_EQ(vec[2], 10);
+}
+
+TEST(VectorTest, Unique) {
+    Vector<int> vec;
+    vec.push_back(10);
+    vec.push_back(20);
+    vec.push_back(20);
+    vec.push_back(30);
+    vec.unique();
+    EXPECT_EQ(vec[0], 10);
+    EXPECT_EQ(vec[1], 20);
+    EXPECT_EQ(vec[2], 30);
+}
+
+TEST(VectorTest, ShrinkToFit) {
+    Vector<int> vec;
+    vec.push_back(10);
+    vec.push_back(20);
+    vec.push_back(30);
+    vec.shrink_to_fit();
+    EXPECT_EQ(vec.capacity(), 3);
+}
+
+TEST(VectorTest, Reserve) {
+    Vector<int> vec;
+    vec.reserve(10);
+    EXPECT_EQ(vec.capacity(), 10);
+}
+
+TEST(VectorTest, Swap) {
+    Vector<int> vec1;
+    vec1.push_back(10);
+    vec1.push_back(20);
+    vec1.push_back(30);
+    Vector<int> vec2;
+    vec2.push_back(40);
+    vec2.push_back(50);
+    vec2.push_back(60);
+    vec1.swap(vec2);
+    EXPECT_EQ(vec1[0], 40);
+    EXPECT_EQ(vec1[1], 50);
+    EXPECT_EQ(vec1[2], 60);
+    EXPECT_EQ(vec2[0], 10);
+    EXPECT_EQ(vec2[1], 20);
+    EXPECT_EQ(vec2[2], 30);
+}
+
+TEST(VectorTest, Assign) {
+    Vector<int> vec;
+    vec.assign(3, 100);
+    EXPECT_EQ(vec[0], 100);
+    EXPECT_EQ(vec[1], 100);
+    EXPECT_EQ(vec[2], 100);
+}
+
+TEST(VectorTest, Erase) {
+    Vector<int> vec;
+    vec.push_back(10);
+    vec.push_back(20);
+    vec.push_back(30);
+    vec.push_back(40);
+    vec.push_back(50);
+    vec.erase(1, 3);
+    EXPECT_EQ(vec[0], 10);
+    EXPECT_EQ(vec[1], 40);
+    EXPECT_EQ(vec[2], 50);
+}
+
+TEST(VectorTest, PlusEquals) {
+    Vector<int> vec1;
+    vec1.push_back(10);
+    vec1.push_back(20);
+    vec1.push_back(30);
+    Vector<int> vec2;
+    vec2.push_back(40);
+    vec2.push_back(50);
+    vec2.push_back(60);
+    vec1 += vec2;
+    EXPECT_EQ(vec1[0], 10);
+    EXPECT_EQ(vec1[1], 20);
+    EXPECT_EQ(vec1[2], 30);
+    EXPECT_EQ(vec1[3], 40);
+    EXPECT_EQ(vec1[4], 50);
+    EXPECT_EQ(vec1[5], 60);
+}
+
+TEST(VectorTest, Plus) {
+    Vector<int> vec1;
+    vec1.push_back(10);
+    vec1.push_back(20);
+    vec1.push_back(30);
+    Vector<int> vec2;
+    vec2.push_back(40);
+    vec2.push_back(50);
+    vec2.push_back(60);
+    Vector<int> vec3 = vec1 + vec2;
+    EXPECT_EQ(vec3[0], 10);
+    EXPECT_EQ(vec3[1], 20);
+    EXPECT_EQ(vec3[2], 30);
+    EXPECT_EQ(vec3[3], 40);
+    EXPECT_EQ(vec3[4], 50);
+    EXPECT_EQ(vec3[5], 60);
+}
+
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
+
