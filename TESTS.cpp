@@ -1,6 +1,12 @@
-int main() 
+/*
+Here are an additional 21 tests to check 
+the operability of all the functions of my dynamic array.
+*/
+
+
+signed int main(void) 
 {
-    Vector<int> vec;
+    Vector<short> vec;
 
     vec.push_back(10);
     vec.push_back(20);
@@ -45,13 +51,15 @@ int main()
     vec.print();
 
     cout << "Test 10: " << vec.at(1) << endl;
-    try {
+    __try 
+    {
         cout << "Test 10: " << vec.at(10) << endl;
-    } catch (const VectorIndexError& e) {
-        cout << "Test 10: " << e.what() << endl;
+    } 
+    __catch (const VectorIndexError& __e) {
+        cout << "Test 10: " << __e.what() << endl;
     }
 
-    int* data_ptr = vec.data();
+    short* data_ptr = vec.data();
     cout << "Test 11: " << data_ptr[0] << " " << data_ptr[1] << " " << data_ptr[2] << endl;
 
     vec.push_back(30);
