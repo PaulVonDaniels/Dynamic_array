@@ -4,9 +4,6 @@ the operability of all the functions of my dynamic array.
 */
 
 
-#include <gtest/gtest.h>
-#include "Vector.h"
-
 TEST(VectorTest, PushBack) {
     Vector<int> vec;
     vec.push_back(10);
